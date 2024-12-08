@@ -83,3 +83,18 @@ class Review(models.Model):
     def __str__(self):
         return f'{self.user}, {self.hotel}'
 
+
+class Booking(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    is_canceled = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        if not self.is_canceled:
+            self.room.is_available = False
+        else:
+            self.room.is_available = True
+        self.room.save()
+        super().save(*args, **kwargs)

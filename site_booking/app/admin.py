@@ -37,4 +37,5 @@ class AllAdmin(TranslationAdmin):
 
 admin.site.register(User)
 admin.site.register(Review)
+admin.site.register(Booking)
 
